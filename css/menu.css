@@ -1,0 +1,315 @@
+/* Define custom properties for easy theming and consistency */
+:root {
+  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  --border-radius: 12px;
+  --transition: all 0.3s ease-in-out;
+  
+  /* Light mode colors */
+  --bg-light: rgba(255, 255, 255, 0.5);
+  --text-light: rgba(0, 0, 0, 0.85);
+  --border-light: rgba(0, 0, 0, 0.1);
+  --button-bg-light: rgba(0, 0, 0, 0.08);
+  --button-hover-light: rgba(0, 0, 0, 0.15);
+  
+  /* Dark mode colors */
+  --bg-dark: rgba(0, 0, 0, 0.5);
+  --text-dark: rgba(255, 255, 255, 0.95);
+  --border-dark: rgba(255, 255, 255, 0.15);
+  --button-bg-dark: rgba(255, 255, 255, 0.15);
+  --button-hover-dark: rgba(255, 255, 255, 0.25);
+}
+
+/* Import Roboto font */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/roboto/v27/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2') format('woff2');
+}
+
+/* Base styles for the context menu */
+#contextMenu {
+  font-family: var(--font-family);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: absolute;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+  transition: var(--transition);
+  min-width: 200px;
+  max-width: 300px;
+  font-size: 14px;
+  z-index: 9999;
+}
+
+/* Light mode styles */
+#contextMenu.light-mode,
+html:not(.dark) #contextMenu,
+body:not(.night-mode) #contextMenu {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border: 1px solid var(--border-light);
+}
+
+/* Dark mode styles */
+#contextMenu.dark-mode,
+html.dark #contextMenu,
+body.night-mode #contextMenu {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+}
+
+/* Title styling */
+#contextMenu .title {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.9;
+}
+
+/* Button styling */
+#contextMenu .copy_eq_btn {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: calc(var(--border-radius) - 4px);
+  margin: 6px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  max-width: 100%;
+}
+
+/* Light mode button styles */
+#contextMenu.light-mode .copy_eq_btn,
+html:not(.dark) #contextMenu .copy_eq_btn,
+body:not(.night-mode) #contextMenu .copy_eq_btn {
+  background-color: var(--button-bg-light);
+  color: var(--text-light);
+}
+
+#contextMenu.light-mode .copy_eq_btn:hover,
+html:not(.dark) #contextMenu .copy_eq_btn:hover,
+body:not(.night-mode) #contextMenu .copy_eq_btn:hover {
+  background-color: var(--button-hover-light);
+}
+
+/* Dark mode button styles */
+#contextMenu.dark-mode .copy_eq_btn,
+html.dark #contextMenu .copy_eq_btn,
+body.night-mode #contextMenu .copy_eq_btn {
+  background-color: var(--button-bg-dark);
+  color: var(--text-dark);
+}
+
+#contextMenu.dark-mode .copy_eq_btn:hover,
+html.dark #contextMenu .copy_eq_btn:hover,
+body.night-mode #contextMenu .copy_eq_btn:hover {
+  background-color: var(--button-hover-dark);
+}
+
+/* Underline styles */
+#contextMenu .copy_eq_btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+#contextMenu .copy_eq_btn:hover::after {
+  transform: scaleX(1);
+}
+
+/* Blue underline for MathML button */
+#contextMenu .copy_eq_btn[data-type="mathml"]::after {
+  background-color: #007bff;
+}
+
+/* Orange underline for LaTeX button */
+#contextMenu .copy_eq_btn[data-type="latex"]::after {
+  background-color: #ffa500;
+}
+
+/* Green underline for Excel button */
+#contextMenu .copy_eq_btn[data-type="excel"]::after {
+  background-color: #28a745;
+}
+
+/* Focus styles */
+#contextMenu .copy_eq_btn:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* General formula styles */
+.formula-element {
+  border: 1px solid transparent;
+  padding: 3px;
+  margin: -4px;
+  transition: var(--transition);
+}
+
+body:not(:has(#contextMenu[desktop])) .formula-element:hover {
+  border-color: currentColor;
+  filter: contrast(1.1);
+  background: rgba(128, 128, 128, 0.1);
+  cursor: pointer;
+}
+
+/* Styles for common math rendering libraries */
+.katex,
+.MathJax,
+.mjx-math,
+.mjx-container,
+.math,
+.mathml,
+.latex-math,
+.asciimath {
+  overflow-x: visible;
+  display: inline-block;
+}
+
+/* ChatGPT specific styles */
+[data-message-id] {
+  overflow-x: visible;
+}
+
+.math.math-inline {
+  overflow-x: visible;
+}
+
+.katex {
+  overflow-x: visible;
+  padding: 3px;
+  border: 1px solid transparent;
+  margin: -4px;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+body:not(:has(#contextMenu[desktop])) .katex:hover {
+  border-color: currentColor;
+  filter: contrast(1.1);
+  background: rgba(128, 128, 128, 0.1);
+  cursor: pointer;
+}
+
+/* Wikipedia specific styles */
+.mwe-math-element {
+  overflow: hidden;
+}
+
+.mwe-math-element > img {
+  border: 1px solid transparent;
+  padding: 3px;
+  margin: -4px;
+  transition: var(--transition);
+}
+
+.mwe-math-fallback-image-display {
+  margin: 0 !important;
+}
+
+body:not(:has(#contextMenu[desktop])) .mwe-math-element > img:hover {
+  border-color: currentColor;
+  filter: contrast(1.1);
+  background: rgba(128, 128, 128, 0.1);
+  cursor: pointer;
+}
+
+/* Android specific styles */
+.katex {
+  border: 2px solid transparent !important;
+  margin: -5px;
+}
+
+.katex:hover {
+  border-color: currentColor !important;
+}
+
+.mwe-math-element > img {
+  border: 2px solid transparent;
+  margin: -5px;
+}
+
+.mwe-math-element > img:hover {
+  border-color: currentColor !important;
+}
+
+/* Styles for other common math rendering methods */
+img[alt*="equation"],
+img[alt*="formula"],
+svg[aria-label*="equation"],
+svg[aria-label*="formula"] {
+  border: 1px solid transparent;
+  padding: 3px;
+  margin: -4px;
+  transition: var(--transition);
+}
+
+body:not(:has(#contextMenu[desktop])) img[alt*="equation"]:hover,
+body:not(:has(#contextMenu[desktop])) img[alt*="formula"]:hover,
+body:not(:has(#contextMenu[desktop])) svg[aria-label*="equation"]:hover,
+body:not(:has(#contextMenu[desktop])) svg[aria-label*="formula"]:hover {
+  border-color: currentColor;
+  filter: contrast(1.1);
+  background: rgba(128, 128, 128, 0.1);
+  cursor: pointer;
+}
+
+/* Media query for system-level dark mode preference */
+@media (prefers-color-scheme: dark) {
+  #contextMenu:not(.light-mode) {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  #contextMenu:not(.light-mode) .copy_eq_btn {
+    background-color: var(--button-bg-dark);
+    color: var(--text-dark);
+  }
+
+  #contextMenu:not(.light-mode) .copy_eq_btn:hover {
+    background-color: var(--button-hover-dark);
+  }
+}
+
+/* Wikipedia dark mode fix */
+body.night-mode #contextMenu,
+body.night-mode #contextMenu .copy_eq_btn {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+body.night-mode #contextMenu .copy_eq_btn:hover {
+  background-color: var(--button-hover-dark);
+}

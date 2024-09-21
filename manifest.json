@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "ChromeGPT",
+  "version": "1.0",
+  "description": "Copy formulas from ChatGPT into Word, Excel or LaTeX format by right click!. Other websites including wikipedia are also compatible!",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "notifications"
+  ],
+  "icons": {
+    "16": "icon/16.png",
+    "32": "icon/32.png",
+    "48": "icon/48.png",
+    "128": "icon/128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["chromegpt.js"],
+      "matches": ["https://chatgpt.com/*", "https://*.wikipedia.org/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["svg/*.svg", "css/*.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
